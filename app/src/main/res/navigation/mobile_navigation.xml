@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_home">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.example.myagenda.fragment.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/nav_profile"
+        android:name="com.example.myagenda.fragment.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile"
+        />
+
+    <fragment
+        android:id="@+id/nav_my_books"
+        android:name="com.example.myagenda.fragment.MyBooksFragment"
+        android:label="My books"
+        tools:layout="@layout/fragment_my_books" />
+
+    <fragment
+        android:id="@+id/nav_finished"
+        android:name="com.example.myagenda.fragment.FinishedFragment"
+        android:label="Finished Books"
+        tools:layout="@layout/fragment_finished" />
+
+    <fragment
+        android:id="@+id/nav_find"
+        android:name="com.example.myagenda.fragment.FindBooksFragment"
+        android:label="Find Books"
+        tools:layout="@layout/fragment_find" />
+
+</navigation>
