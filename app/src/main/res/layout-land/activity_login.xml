@@ -76,12 +76,6 @@
             android:layout_marginTop="20dp"
             android:gravity="center">
 
-            <ImageView
-                android:id="@+id/facebook_button"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_margin="20dp"
-                android:src="@drawable/facebook" />
 
             <ImageView
                 android:id="@+id/google_button"

@@ -35,7 +35,7 @@ public class FindBooksFragment extends Fragment {
     private RequestQueue mRequestQueue;
     private ArrayList<BookInfo> bookInfoArrayList;
     private RecyclerView rv;
-    private String HTTPS = "https://www.googleapis.com/books/v1/volumes?q=";
+    private final String HTTPS = "https://www.googleapis.com/books/v1/volumes?q=";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

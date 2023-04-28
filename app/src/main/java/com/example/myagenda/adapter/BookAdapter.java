@@ -1,5 +1,8 @@
 package com.example.myagenda.adapter;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,7 +70,6 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
 
             removeButton = itemView.findViewById(R.id.deleteBook);
             moveToFinishedButton = itemView.findViewById(R.id.moveToFinished);
-//            finishedDate = itemView.findViewById(R.id.finishedBookDate);
 
             layout = itemView.findViewById(R.id.container);
 
@@ -85,17 +87,29 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
             bookSubtitle.setText(item.getSubtitle());
             bookAuthors.setText(item.getAuthors());
 
-            if (Objects.equals(item.getThumbnail(), "")) {
-                Picasso.get().load(R.drawable.book)
-                        .fit()
-                        .centerCrop()
-                        .into(bookImage);
+            if (item.getIsHttpsImage()) {
+                if(Objects.equals(item.getThumbnail(), "")) {
+                    Picasso.get().load(R.drawable.book)
+                            .fit()
+                            .centerCrop()
+                            .into(bookImage);
+                } else {
+                    Picasso.get().load(item.getThumbnail())
+                            .placeholder(R.drawable.book)
+                            .fit()
+                            .centerCrop()
+                            .into(bookImage);
+                }
             } else {
-                Picasso.get().load(item.getThumbnail())
-                        .placeholder(R.drawable.book)
-                        .fit()
-                        .centerCrop()
-                        .into(bookImage);
+                if (item.getThumbnail().equals("")) {
+                    Picasso.get().load(R.drawable.book)
+                            .fit()
+                            .centerCrop()
+                            .into(bookImage);
+                } else {
+                    Bitmap bitmapImage = StringToBitmap(item.getThumbnail());
+                    bookImage.setImageBitmap(bitmapImage);
+                }
             }
 
             removeButton.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +132,18 @@ public class BookAdapter extends RecyclerView.Adapter<BookAdapter.BookViewHolder
                     itemClickListener.onItemClick(item, "container");
                 }
             });
+        }
+
+        public Bitmap StringToBitmap(String encodedString) {
+            try {
+                byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0,
+                        encodeByte.length);
+                return bitmap;
+            } catch (Exception e) {
+                e.getMessage();
+                return null;
+            }
         }
     }
 }

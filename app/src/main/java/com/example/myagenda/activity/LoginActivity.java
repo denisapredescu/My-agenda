@@ -41,11 +41,10 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity implements UserOperationsInterface {
 
-    CallbackManager callbackManager;   // for facebook
     GoogleSignInOptions gso;
     GoogleSignInClient gsc;
+    private final int REQUEST_CODE = 1000;
     ImageView googleButton;
-    ImageView facebookButton;
     SharedPreferences sharedPreferences;
     EditText email;
     EditText password;
@@ -67,41 +66,11 @@ public class LoginActivity extends AppCompatActivity implements UserOperationsIn
             }
         });
 
-        FacebookSdk.sdkInitialize(getApplicationContext());
-        AppEventsLogger.activateApp(getApplication());
-        callbackManager = CallbackManager.Factory.create();
-
-        LoginManager.getInstance().registerCallback(callbackManager,
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        // App code
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
-
         sharedPreferences = getSharedPreferences("login", Context.MODE_PRIVATE);
         email = findViewById(R.id.email);
         password = findViewById(R.id.password);
         submitButton = findViewById(R.id.login_button);
         goToRegister = findViewById(R.id.goToRegister);
-        facebookButton = findViewById(R.id.facebook_button);
-
-        facebookButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile"));
-            }
-        });
 
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,15 +99,14 @@ public class LoginActivity extends AppCompatActivity implements UserOperationsIn
 
     protected void signInWithGoogle() {
         Intent signInIntent = gsc.getSignInIntent();
-        startActivityForResult(signInIntent, 1000);
+        startActivityForResult(signInIntent, REQUEST_CODE);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == 1000) {
+        if (requestCode == REQUEST_CODE) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
 
             try {

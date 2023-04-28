@@ -36,7 +36,6 @@ public class MyBooksFragment extends Fragment  implements OnItemClickListener, B
     SharedPreferences sharedPreferences;
     RecyclerView rv;
     public static List<Book> bookList = new ArrayList<>();
-    public static String BOOK = "book";
 
     public MyBooksFragment() {
         super(R.layout.fragment_my_books);
